@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+dotenv.config();
 import Http from 'http';
 import App from './app';
 
