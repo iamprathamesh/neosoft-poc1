@@ -1,5 +1,6 @@
 import express from 'express';
-import { save } from '../handlers/common-handler';
+import mongoose from 'mongoose';
+import {save} from '../handlers/common-handler';
 import User from '../interfaces/user';
 import userModel from '../models/user';
 
@@ -7,11 +8,12 @@ const router: express.Router = express.Router();
 
 router.post('/save', (req, res, next) => {
     const user: User = {
-        firstname: 'TestUser',
-        lastname: 'TestUser',
-        email: 'testuser@gmail.com',
+        _id: mongoose.Types.ObjectId(),
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
         roles: ['user'],
-        password: 'pwd123'
+        password: req.body.password,
     };
 
     save(userModel, user).then((user) => {
