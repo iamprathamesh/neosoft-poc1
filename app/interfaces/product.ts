@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export default interface Product {
+export default interface IProduct {
     _id: mongoose.Types.ObjectId,
     name: string,
     description: string,

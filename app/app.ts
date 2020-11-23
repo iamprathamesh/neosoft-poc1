@@ -2,6 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import userRoute from './routes/user';
 import productRoute from './routes/product';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
+import authRoute from './routes/auth';
+import swaggerOptions from '../config/swagger';
+
+const app: express.Application = express();
+app.use(express.json());
 
 mongoose.connect(process.env.MONGO_DATASOURCE!, {
     useNewUrlParser: true,
@@ -9,16 +16,17 @@ mongoose.connect(process.env.MONGO_DATASOURCE!, {
     useCreateIndex: true,
 });
 
-const app: express.Application = express();
+const swaggerDocs: object = swaggerJsDoc(swaggerOptions);
 
-app.use(express.json());
+app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
 
 app.get('/', (req, res, next) => {
     res.status(200).json({
-        'message': 'Server successfully started!',
+        'message': 'Server successfully started',
     });
 });
 
+app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/product', productRoute);
 
