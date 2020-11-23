@@ -8,6 +8,6 @@ export const findOne = (model: Model<any>, params: any) => {
     return model.findOne(params);
 };
 
-export const find = (model: Model<any>) => {
+export const findAll = (model: Model<any>) => {
     return model.find();
 };

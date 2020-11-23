@@ -10,3 +10,5 @@ const server: Http.Server = Http.createServer(App);
 server.listen(process.env.PORT!, () => {
     console.log(`server started on port: ${process.env.PORT!}`);
 });
+
+export default server;

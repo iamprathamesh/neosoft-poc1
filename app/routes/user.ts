@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import {save, find} from '../handlers/common-handler';
+import {save, findAll} from '../handlers/common-handler';
 import IUser from '../interfaces/user';
 import userModel from '../models/user';
 import {verifyToken} from '../util/auth';
@@ -24,8 +24,8 @@ router.post('/save', (req, res, next) => {
     });
 });
 
-router.get('/find', verifyToken, (req, res, next) => {
-    find(userModel).then((data) => {
+router.get('/findAll', verifyToken, (req, res, next) => {
+    findAll(userModel).then((data) => {
         res.status(200).json(data);
     }).catch((err) => {
         next(err);

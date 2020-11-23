@@ -18,7 +18,9 @@ mongoose.connect(process.env.MONGO_DATASOURCE!, {
 
 const swaggerDocs: object = swaggerJsDoc(swaggerOptions);
 
-app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
+app.use('/api-docs',
+    swaggerUiExpress.serve,
+    swaggerUiExpress.setup(swaggerDocs));
 
 app.get('/', (req, res, next) => {
     res.status(200).json({

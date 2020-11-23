@@ -19,6 +19,7 @@
         "indent": ["error", 4],
         "semi": "off",
         "@typescript-eslint/semi": ["error"],
+        "linebreak-style": 0,
         "new-cap": "off"
     }
 }
