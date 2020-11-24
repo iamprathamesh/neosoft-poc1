@@ -104,7 +104,7 @@ const swaggerOptions = {
                     }
                 }
             },
-            "/user/find": {
+            "/user/findAll": {
                 get: {
                     tags: ["Get all users"],
                     summary: "get all users",
@@ -129,7 +129,7 @@ const swaggerOptions = {
                     }
                 }
             },
-            "/product/find": {
+            "/product/findAll": {
                 get: {
                     tags: ["Get all products"],
                     summary: "get all products",

@@ -1,35 +1,25 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import {save, findAll} from '../handlers/common-handler';
+import {save, findAll} from '../services/common-service';
 import IUser from '../interfaces/user';
 import userModel from '../models/user';
 import {verifyToken} from '../util/auth';
+import { findAllUsers, saveUser } from '../services/user';
 
 const router: express.Router = express.Router();
 
-router.post('/save', (req, res, next) => {
-    const user: IUser = {
-        _id: mongoose.Types.ObjectId(),
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        roles: ['user'],
-        password: req.body.password,
-    };
-
-    save(userModel, user).then((user) => {
+router.post('/save', async (req, res, next) => {
+    const user: IUser | undefined = await saveUser(req, res, next);
+    if (typeof user === 'object') {
         res.status(201).json(user);
-    }).catch((err) => {
-        next(err);
-    });
+    }
 });
 
-router.get('/findAll', verifyToken, (req, res, next) => {
-    findAll(userModel).then((data) => {
-        res.status(200).json(data);
-    }).catch((err) => {
-        next(err);
-    });
+router.get('/findAll', verifyToken, async (req, res, next) => {
+    const users : Array<IUser> | undefined = await findAllUsers(req, res, next);
+    if (typeof users === 'object') {
+        res.status(200).json(users);    
+    }
 });
 
 export default router;

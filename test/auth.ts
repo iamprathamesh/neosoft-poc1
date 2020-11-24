@@ -24,8 +24,8 @@ describe(('Auth API'), () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('token');
-                    done();
-                });
+                done();
+            });
         });
 
         it('it should return error', (done) => {
@@ -39,8 +39,8 @@ describe(('Auth API'), () => {
                 .send(loginCreds)
                 .end((err, res) => {
                     res.should.have.status(403);
-                    done();
-                });
+                done();
+            });
         });
     });
 });
