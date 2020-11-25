@@ -5,13 +5,11 @@ import IUser from '../interfaces/user';
 import { getToken } from '../util/auth';
 import { IError } from '../interfaces/error';
 
-export const login = async (req: any, res: any, next: any) : Promise<IToken | undefined> => {
-
+export const login = async (loginCreds: ILogin) : Promise<IToken> => {
     try {
 
-        const loginCreds: ILogin = {
-            email: req.body.email,
-            password: req.body.password,
+        const tokenDTO: IToken = {
+            token: 'No Token',
         };
 
         const user = await findOne(UserModel, loginCreds);
@@ -25,21 +23,20 @@ export const login = async (req: any, res: any, next: any) : Promise<IToken | un
                 roles: user.roles,
             };
     
-            const tokenDTO: IToken = {
-                token: 'Bearer ' + getToken(userData)
+            tokenDTO.token = 'Bearer ' + getToken(userData);
+
+        } else {
+            const err: IError = {
+                status: 403,
+                message: 'Invalid email or password',
             };
-
-            return tokenDTO;
+            
+            throw err;
         }
-        
-        const err: IError = {
-            status: 403,
-            message: 'Invalid email or password',
-        };
-        
-        next(err);
 
+        return tokenDTO;
+        
     } catch (err) {
-        next(err);
+        throw err;
     }
 };

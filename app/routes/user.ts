@@ -9,16 +9,35 @@ import { findAllUsers, saveUser } from '../services/user';
 const router: express.Router = express.Router();
 
 router.post('/save', async (req, res, next) => {
-    const user: IUser | undefined = await saveUser(req, res, next);
-    if (typeof user === 'object') {
-        res.status(201).json(user);
+    try {
+        const user: IUser = {
+            _id: mongoose.Types.ObjectId(),
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            roles: ['user'],
+            password: req.body.password,
+        };
+    
+        const savedUser: IUser = await saveUser(user);
+
+        if (typeof user === 'object') {
+            res.status(201).json(savedUser);
+        }
+    } catch (err) {
+        next(err);
     }
+    
 });
 
 router.get('/findAll', verifyToken, async (req, res, next) => {
-    const users : Array<IUser> | undefined = await findAllUsers(req, res, next);
-    if (typeof users === 'object') {
-        res.status(200).json(users);    
+    try {
+        const users : Array<IUser> = await findAllUsers();
+        if (typeof users === 'object') {
+            res.status(200).json(users);
+        }
+    } catch (err) {
+        next(err);
     }
 });
 

@@ -175,12 +175,6 @@ const swaggerOptions = {
                                             lastname: {
                                                 type: "string",
                                             },
-                                            roles: {
-                                                type: "array",
-                                                items: {
-                                                    type: "string",
-                                                }
-                                            },
                                             email: {
                                                 type: "string",
                                             },
